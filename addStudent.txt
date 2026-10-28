@@ -1,0 +1,24 @@
+
+<%@ page import="com.studentcrud.Student, com.studentcrud.StudentDAO" %>
+<%
+if (request.getParameter("rollNo") != null) {
+    Student s = new Student();
+    s.setRollNo(Integer.parseInt(request.getParameter("rollNo")));
+    s.setName(request.getParameter("name"));
+    s.setEmail(request.getParameter("email"));
+    s.setAge(Integer.parseInt(request.getParameter("age")));
+    StudentDAO dao = new StudentDAO();
+    dao.addStudent(s);
+    out.println("Student added successfully.");
+}
+%>
+<h2>Add Student</h2>
+<form>
+    Roll No: <input type="number" name="rollNo" required><br><br>
+    Name: <input type="text" name="name" required><br><br>
+    Email: <input type="email" name="email" required><br><br>
+    Age: <input type="number" name="age" required><br><br>
+    <input type="submit" value="Add Student">
+</form>
+<br>
+<a href="viewStudents.jsp">View Students</a>

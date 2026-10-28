@@ -1,0 +1,24 @@
+<%@ page import="java.util.List, com.studentcrud.Student, com.studentcrud.StudentDAO" %>
+<%
+StudentDAO dao = new StudentDAO();
+List<Student> students = dao.getAllStudents();
+%>
+<html>
+<body>
+<h2>View Students</h2>
+<%
+for (Student s : students) {
+%>
+    Roll No: <%= s.getRollNo() %><br>
+    Name: <%= s.getName() %><br>
+    Email: <%= s.getEmail() %><br>
+    Age: <%= s.getAge() %><br>
+    <a href="editStudent.jsp?rollNo=<%= s.getRollNo() %>">Edit</a> |
+    <a href="deleteStudent.jsp?rollNo=<%= s.getRollNo() %>">Delete</a>
+    <hr>
+<%
+}
+%>
+<a href="addStudent.jsp">Add Student</a>
+</body>
+</html>

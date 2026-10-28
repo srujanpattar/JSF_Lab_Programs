@@ -1,0 +1,55 @@
+package com.studentcrud;
+import java.sql.*;
+import java.util.*;
+public class StudentDAO {
+    public void addStudent(Student s) {
+        try {
+            Connection c = DBConnection.getConnection();
+            PreparedStatement p = c.prepareStatement("INSERT INTO students VALUES (?, ?, ?, ?)");
+            p.setInt(1, s.getRollNo());
+            p.setString(2, s.getName());
+            p.setString(3, s.getEmail());
+            p.setInt(4, s.getAge());
+            p.executeUpdate();
+            c.close();
+        } catch (Exception e) { e.printStackTrace(); }
+    }
+    public List<Student> getAllStudents() {
+        List<Student> list = new ArrayList<>();
+        try {
+            Connection c = DBConnection.getConnection();
+            ResultSet r = c.createStatement().executeQuery("SELECT * FROM students");
+            while (r.next()) {
+                Student s = new Student();
+                s.setRollNo(r.getInt(1));
+                s.setName(r.getString(2));
+                s.setEmail(r.getString(3));
+                s.setAge(r.getInt(4));
+                list.add(s);
+            }
+            c.close();
+        } catch (Exception e) { e.printStackTrace(); }
+        return list;
+    }
+    public void updateStudent(Student s) {
+        try {
+            Connection c = DBConnection.getConnection();
+            PreparedStatement p = c.prepareStatement("UPDATE students SET name=?, email=?, age=? WHERE roll_no=?");
+            p.setString(1, s.getName());
+            p.setString(2, s.getEmail());
+            p.setInt(3, s.getAge());
+            p.setInt(4, s.getRollNo());
+            p.executeUpdate();
+            c.close();
+        } catch (Exception e) { e.printStackTrace(); }
+    }
+    public void deleteStudent(int id) {
+        try {
+            Connection c = DBConnection.getConnection();
+            PreparedStatement p = c.prepareStatement("DELETE FROM students WHERE roll_no=?");
+            p.setInt(1, id);
+            p.executeUpdate();
+            c.close();
+        } catch (Exception e) { e.printStackTrace(); }
+    }
+}
