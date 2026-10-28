@@ -1,0 +1,43 @@
+import java.io.*;
+import javax.servlet.http.*;
+import javax.servlet.annotation.WebServlet;
+@WebServlet("/SessionServlet")
+public class SessionServlet extends HttpServlet {
+    public void doGet(HttpServletRequest req,
+                      HttpServletResponse res) throws IOException {
+        res.setContentType("text/html");
+        PrintWriter out = res.getWriter();
+        HttpSession s = req.getSession(false);
+        if ("logout".equals(req.getParameter("action"))) {
+            if (s != null)
+                s.invalidate();
+            res.sendRedirect("SessionServlet");
+            return;
+        }
+        if (s != null && s.getAttribute("username") != null) {
+            out.println("Welcome " + s.getAttribute("username"));
+            out.println("<br><a href='SessionServlet?action=logout'>Logout</a>");
+            out.println("<br>Session ID: " + s.getId());
+            out.println("<br>Creation Time: " +
+                new java.util.Date(s.getCreationTime()));
+            out.println("<br>Last Accessed: " +
+                new java.util.Date(s.getLastAccessedTime()));
+        } else {
+            out.println("<form method='post'>");
+            out.println("Username: <input name='username'><br>");
+            out.println("Password: <input type='password' name='password'><br>");
+            out.println("<input type='submit' value='Login'>");
+            out.println("</form>");
+        }
+    }
+    public void doPost(HttpServletRequest req,
+                       HttpServletResponse res) throws IOException {
+        String u = req.getParameter("username");
+        String p = req.getParameter("password");
+        if ("admin".equals(u) && "password".equals(p)) {
+            HttpSession s = req.getSession();
+            s.setAttribute("username", u);
+        }
+        res.sendRedirect("SessionServlet");
+    }
+}

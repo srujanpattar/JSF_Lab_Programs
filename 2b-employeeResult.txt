@@ -1,0 +1,52 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>Employee Info Result</h2>
+
+    <%
+    String id = request.getParameter("id");
+    String name = request.getParameter("name");
+    String age = request.getParameter("age");
+    String dept = request.getParameter("dept");
+    String email = request.getParameter("email");
+    String errors = "";
+
+    if (id == null || id.trim().isEmpty())
+        errors += "<li>Employee ID is required.</li>";
+
+    if (name == null || !name.matches("[A-Za-z ]+"))
+        errors += "<li>Name must contain only letters and spaces.</li>";
+
+    try {
+        int n = Integer.parseInt(age);
+        if (n < 18 || n > 65)
+            errors += "<li>Age must be between 18 and 65.</li>";
+    } catch (Exception e) {
+        errors += "<li>Enter a valid age.</li>";
+    }
+
+    if (!"HR".equals(dept) && !"IT".equals(dept) &&
+        !"Finance".equals(dept) && !"Admin".equals(dept))
+        errors += "<li>Enter a valid department.</li>";
+
+    if (email == null ||
+        !email.matches("[\\w.+-]+@[\\w.-]+\\.[A-Za-z]{2,}"))
+        errors += "<li>Enter a valid email.</li>";
+    %>
+
+        <ul><%= errors %></ul>
+
+
+    <h3>Entered Details</h3>
+    Employee ID: <%= id %><br>
+    Name: <%= name %><br>
+    Age: <%= age %><br>
+    Department: <%= dept %><br>
+    Email: <%= email %><br>
+    
+    <a href='employeeForm?action=Goback'>Goback</a>;
+
+</body>
+</html>

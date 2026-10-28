@@ -1,0 +1,20 @@
+<%@ page import="java.util.Calendar" %>
+<html>
+<body>
+    <h2>Employee Information Result</h2>
+    <%
+        String id = request.getParameter("employeeId");
+        String name = request.getParameter("name");
+        int age = Integer.parseInt(request.getParameter("age"));
+        String dept = request.getParameter("department");
+        String email = request.getParameter("email");
+        String details = name + " - " + dept;
+        int birthYear = Calendar.getInstance().get(Calendar.YEAR) - age;
+        String formattedEmail = email.toLowerCase();
+    %>
+    Employee ID: <%= id %><br>
+    Name and Department: <%= details %><br>
+    Birth Year: <%= birthYear %><br>
+    Formatted Email: <%= formattedEmail %>
+</body>
+</html>

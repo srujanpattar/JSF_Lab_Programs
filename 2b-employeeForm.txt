@@ -1,0 +1,26 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<form action="employeeResult.jsp" method="post">
+        EmployeeId: <input type="text" name="id"><br>
+        Name: <input type="text" name="text"><br>
+        Age: <input type="number" name="age"><br>
+        Department:
+        <select name="dept">
+            <option>Select</option>
+            <option>HR</option>
+            <option>IT</option>
+            <option>Finance</option>
+            <option>Admin</option>
+        </select><br>
+        Email: <input type="email" name="email" ><br>
+        <input type="submit">
+      </form>
+</body>
+</html>
